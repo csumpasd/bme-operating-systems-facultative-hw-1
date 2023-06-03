@@ -68,8 +68,6 @@ def round_robin():
     current.run_time += 1  # run task for 1 frame (to keep track of the time left from the slice)
     current.length -= 1  # and actually subtract 1 from remaining
 
-    # print(current.name + " " + str(current.run_time) + " mod: " + str(current.run_time % rr_time_slice))
-
     if current.run_time % rr_time_slice == 0 and current.length != 0 and not len(rr_ready) == 0:
         insert_rr(current)
         current = None
@@ -79,13 +77,6 @@ def round_robin():
 
 
 def insert_srtf(task_srtf):
-    # global current
-    # global result
-    # if current is not None and task_srtf.length < current.length:
-    #     temp = task_srtf
-    #     task_srtf = current
-    #     current = temp
-    #     result += current.name
 
     if len(srtf_ready) != 0:
         found = False
@@ -135,19 +126,6 @@ def shortest_remaining_time_first():
 
 while len(tasks) > 0 or len(rr_ready) > 0 or len(srtf_ready) > 0 or current is not None:
 
-    # print()
-    #
-    # for rr in rr_ready:
-    #     print("rr: " + rr.name + " " + str(rr.length))
-    #
-    # for sr in srtf_ready:
-    #     print("sr: " + sr.name + " " + str(sr.length))
-    #
-    # if current is not None:
-    #     print("cu: " + current.name + " " + str(current.length))
-    #
-    # print(str(time))
-
     if len(rr_ready) > 0 or (current is not None and current.priority == 1):
         round_robin()
     elif len(srtf_ready) > 0 or (current is not None and current.priority == 0):
@@ -165,17 +143,6 @@ while len(tasks) > 0 or len(rr_ready) > 0 or len(srtf_ready) > 0 or current is n
                 tasks.remove(tasks[i])
         else:
             i += 1
-
-    # for rr in rr_ready:
-    #     print("rr: " + rr.name + " " + str(rr.length))
-    #
-    # for sr in srtf_ready:
-    #     print("sr: " + sr.name + " " + str(sr.length))
-    #
-    # if current is not None:
-    #     print("cu: " + current.name + " " + str(current.length))
-    #
-    # print(result)
 
     time += 1
 
